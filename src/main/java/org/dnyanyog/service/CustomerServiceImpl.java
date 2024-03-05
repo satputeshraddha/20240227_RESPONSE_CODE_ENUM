@@ -30,7 +30,9 @@ public class CustomerServiceImpl
 	public CustomerResponse addCustomerDetails(CustomerRequest customerRequest) {
 
 		if (customerRepo.existsByEmail_id(customerRequest.getEmailID())) {
+			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_DUPLICATE_EMAIL_CODE.getCode());
 			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_DUPLICATE_EMAIL_CODE.getMessage());
+			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_SUCCESS_MESSAGE.getCode());
 			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_SUCCESS_MESSAGE.getMessage());
 
 			customerResponse.setCustomerCode(0000);
@@ -53,8 +55,9 @@ public class CustomerServiceImpl
 				e.printStackTrace();
 			}
 
+			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_SUCCESS_CODE.getCode());
 			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_SUCCESS_CODE.getMessage());
-		//	System.out.println(ResponseCode.ADD_CUSTOMER_SUCCESS_MESSAGE.getCode());
+			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_SUCCESS_MESSAGE.getCode());
 			customerResponse.setMessage(ResponseCode.ADD_CUSTOMER_SUCCESS_MESSAGE.getMessage());
 
 			customerResponse.setCustomerCode(customerTable.getCustomer_code());
@@ -68,11 +71,12 @@ public class CustomerServiceImpl
 		Optional<Customer> customerTable = customerRepo.findById(id);
 		if (customerTable.isEmpty()) 
 		{
-		
+			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_CODE.getCode());
 			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_CODE.getMessage());
+			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_MESSAGE.getCode());
 			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_MESSAGE.getMessage());
 
-			customerResponse.setCustomerCode(0000);
+		customerResponse.setCustomerCode(0000);
 		} else {
 			Customer customer = Customer.getInstance().setFirst_name(customerRequest.getFirstName())
 					.setMiddle_name(customerRequest.getMiddleName()).setLast_name(customerRequest.getLastName())
@@ -96,15 +100,17 @@ public class CustomerServiceImpl
 		List<Customer> customerTable = customerRepo.findByMobile(mobile_number);
 		if (customerTable.isEmpty()) 
 		{
-			
+			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_CODE.getCode());
 			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_CODE.getMessage());
+			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_MESSAGE.getCode());
 			customerResponse.setMessage(ResponseCode.CUSTOMER_NOT_FOUND_MESSAGE.getMessage());
 
-			customerResponse.setCustomerCode(0000);
+		customerResponse.setCustomerCode(0000);
 		} else {
 			Customer receivedData = customerTable.get(0);
-
+			customerResponse.setMessage(ResponseCode.CUSTOMER_DETAILS_SUCCESS_CODE.getCode());
 			customerResponse.setMessage(ResponseCode.CUSTOMER_DETAILS_SUCCESS_CODE.getMessage());
+			customerResponse.setMessage(ResponseCode.CUSTOMER_DETAILS_SUCCESS_MESSAGE.getCode());
 			customerResponse.setMessage(ResponseCode.CUSTOMER_DETAILS_SUCCESS_MESSAGE.getMessage());
 		
 			searchCustomerResponse.setCustomerCode(receivedData.getCustomer_code());
